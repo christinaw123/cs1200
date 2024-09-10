@@ -38,20 +38,18 @@ class BTvertex:
 # Runtime: O(n)
 def calculate_sizes(v):
     # Your code goes here
-
     #Base Case for if the node is none
     if v == None:
-        return
-    #if left subtree exists, calculate size
-    if v.left != None:
-        left_size = calculate_sizes(v.left)
-        if v.right != None:
-            right_size = calculate_sizes(v.right)
+        return 0
+    #calculate size of left tree
+    left_size = calculate_sizes(v.left)
+    #calculate size of right tree
+    right_size = calculate_sizes(v.right)
 
-    return left_size + right_size + 1
+    #total size of subtree
+    v.size = left_size + right_size + 1
 
-    pass 
-
+    return v.size
 
 #
 # Problem 1c
@@ -65,4 +63,25 @@ def calculate_sizes(v):
 
 def FindDescendantOfSize(t, v):
     # Your code goes here 
+    #question: do we already know that the inputed v has size at greater than or equal to 2t+1
+    #Base Case for if the node is none
+    if v == None:
+        return None
+    
+    #check if the vertex we're looking for the current vertex v
+    if t <= calculate_sizes(v) <= 2*t: #if the size is between t and 2t inclusive then we have found vertex v
+        return v
+    
+    #check if the key in the left tree, if yes then return true
+    #if left child exists, check if its subtree has size between t and 2t, if not keep going down the left branch
+    if v.left !=None and calculate_sizes(v.left) >=t: 
+        w = FindDescendantOfSize(t, v.left)
+        return w
+    
+    #if right child exists, check that and go down right branch
+    if v.right !=None and calculate_sizes(v.right) >=t:
+        w = FindDescendantOfSize(t, v.right)
+        return w
+    
+    return None #if such a vertex does not exist in tree
     pass 
