@@ -70,19 +70,18 @@ def FindDescendantOfSize(t, v):
     
     #check if the vertex we're looking for the current vertex v
     #question: do we use v or calculate_sizes(v)
-    if t <= v <= 2*t: #if the size is between t and 2t inclusive then we have found vertex v
+    if t <= v.size <= 2*t: #if the size is between t and 2t inclusive then we have found vertex v
         return v
     
     #check if the key in the left tree, if yes then return true
     #if left child exists, check if its subtree has size between t and 2t, if not keep going down the left branch
-    if v.left !=None and v.left >=t: 
+    if v.left !=None and v.left.size >=t: 
         w = FindDescendantOfSize(t, v.left)
         return w
     
     #if right child exists, check that and go down right branch
-    if v.right !=None and v.right >=t:
+    if v.right !=None and v.right.size >=t:
         w = FindDescendantOfSize(t, v.right)
         return w
     
     return None #if such a vertex does not exist in tree
-    pass 
